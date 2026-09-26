@@ -1,0 +1,27 @@
+import { INestApplication } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import request from 'supertest';
+import { AppModule } from './../src/app.module';
+
+describe('Health', () => {
+  let app: INestApplication;
+
+  beforeEach(async () => {
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile();
+    app = moduleFixture.createNestApplication();
+    await app.init();
+  });
+
+  afterEach(async () => {
+    await app.close();
+  });
+
+  it('GET /health', () => {
+    return request(app.getHttpServer() as Parameters<typeof request>[0])
+      .get('/health')
+      .expect(200)
+      .expect({ ok: true });
+  });
+});

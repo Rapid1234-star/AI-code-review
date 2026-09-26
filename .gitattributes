@@ -1,0 +1,3 @@
+* text=auto
+sandbox/entrypoint.sh text eol=lf
+sandbox/Dockerfile text eol=lf
